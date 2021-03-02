@@ -65,6 +65,7 @@ const Display = (() => {
     const board = document.querySelector('#board');
     const winCard = document.querySelector('#win-card');
     const winnerSpan = document.querySelector('#winner');
+    const asides = document.querySelectorAll('.aside');
 
     playernames[0].textContent = Game.players[0].getName();
     playernames[1].textContent = Game.players[1].getName();
@@ -73,6 +74,9 @@ const Display = (() => {
         board.style.display = 'none';
         winnerSpan.textContent = playerName;
         winCard.style.display = 'flex';
+        asides.forEach(aside => {
+            aside.style.display = 'none';
+        });
     };
 
     const reset = () => {

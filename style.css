@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+    /* background-color: tomato; */
 }
 
 .card {
@@ -32,7 +33,6 @@
 }
 
 #board {
-    /* display: none; */
     display: flex;
     flex-direction: column;
     padding: 4px;
@@ -40,7 +40,6 @@
 }
 
 #win-card {
-    /* display: flex; */
     display: none;
     flex-direction: row;
     font-size: 2rem;
@@ -52,4 +51,25 @@
 #winner {
     display: inline-block;
     margin: 0 0.4rem 0 0.4rem;
+}
+
+.aside {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20rem;
+    min-width: 200px;
+    min-height: 320px;
+    align-self: flex-end;
+    padding: 9px;
+    justify-items: stretch;
+}
+
+#aside1 {
+    background-image: linear-gradient(0deg, #dedede 0%, #ffffff 58%);
+}
+
+@media (max-width: 1500px) {
+    .aside {
+        margin-right: 1rem;
+    }
 }

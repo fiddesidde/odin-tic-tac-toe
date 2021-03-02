@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,19 +10,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@600&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <main>
-        <div>
-            Player 1: <span class="player-name" id="p1"></span>
-        </div>
-        <div>
-            Player 2: <span class="player-name" id="p2"></span>
-        </div>
-        <div id="reset">RESET</div>
-
-        <div id="cur-player"></div>
 
         <div id="container">
+            <aside class="aside card" id="aside1">
+                <div>
+                    Player 1: <span class="player-name" id="p1"></span>
+                </div>
+                <div>
+                    Player 2: <span class="player-name" id="p2"></span>
+                </div>
+                <div id="reset">RESET</div>
+                <div>Current Player is:</div>
+
+                <div id="cur-player"></div>
+            </aside>
             <div class="card" id="board">
                 <div class="row">
                     <div class="slot" id="0"></div>
@@ -39,9 +44,12 @@
                     <div class="slot" id="8"></div>
                 </div>
             </div>
+            <aside class="aside">
+            </aside>
             <div id='win-card' class="card">Congratulations!<span id="winner">Fredrik</span>wins!</div>
         </div>
     </main>
     <script src="script.js"></script>
 </body>
+
 </html>
