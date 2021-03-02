@@ -6,7 +6,10 @@ const Player = (name, symbol) => {
     const increaseScore = () => {
         score++;
     };
-    return { getName, getSymbol, getScore, increaseScore };
+    const resetScore = () => {
+        score = 0;
+    };
+    return { getName, getSymbol, getScore, increaseScore, resetScore };
 };
 
 const Game = (() => {
@@ -122,10 +125,8 @@ const Gameboard = (() => {
                 gameboardArray[i] === gameboardArray[i + 3] &&
                 gameboardArray[i + 3] === gameboardArray[i + 6] &&
                 gameboardArray[i] !== undefined
-            ) {
-                console.log('here');
+            )
                 return gameboardArray[i];
-            }
 
         for (let i = 0; i < 7; i = i + 3)
             if (
