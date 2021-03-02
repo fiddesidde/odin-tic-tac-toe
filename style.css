@@ -27,3 +27,21 @@
     margin: 4px;
     padding: 10px;
 }
+
+#board {
+    /* display: none; */
+}
+
+#win-card {
+    /* display: flex; */
+    display: none;
+    flex-direction: row;
+    font-size: 32px;
+    width: 500px;
+    justify-content: center;
+}
+
+#winner {
+    display: inline-block;
+    margin: 0 0.4rem 0 0.4rem;
+}

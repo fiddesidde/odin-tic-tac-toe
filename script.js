@@ -1,29 +1,26 @@
 const Player = (name, symbol) => {
+    let score = 0;
     const getName = () => name;
     const getSymbol = () => symbol;
-    return { getName, getSymbol };
+    const getScore = () => score;
+    const increaseScore = () => {
+        score++;
+    };
+    return { getName, getSymbol, getScore, increaseScore };
 };
 
 const Game = (() => {
-    const resetBtn = document.querySelector('#reset');
-    resetBtn.addEventListener('click', () => {
-        reset();
-    });
-
     const getPlayerNameFromUser = player => {
-        let answer = '';
-        do {
-            answer = prompt(`Enter name of ${player}!`);
-        } while (!answer);
-        return answer;
+        // let answer = '';
+        // do {
+        //     answer = prompt(`Enter name of ${player}!`);
+        // } while (!answer);
+        // return answer;
+        return player;
     };
-
     const p1 = Player(getPlayerNameFromUser('player 1'), 'X');
     const p2 = Player(getPlayerNameFromUser('player 2'), 'O');
-    const playernames = document.querySelectorAll('.player-name');
-
-    playernames[0].textContent = p1.getName();
-    playernames[1].textContent = p2.getName();
+    const players = [p1, p2];
 
     let currentPlayer = p1;
 
@@ -32,14 +29,61 @@ const Game = (() => {
     const nextPlayer = () => {
         if (currentPlayer === p1) currentPlayer = p2;
         else currentPlayer = p1;
+        Display.setCurrentPlayerDiv();
     };
 
     const reset = () => {
         currentPlayer = p1;
+        Display.reset();
         Gameboard.reset();
     };
 
-    return { getCurrentPlayer, nextPlayer, reset };
+    const play = e => {
+        const player = getCurrentPlayer();
+        Gameboard.addSymbol(player, e.target.id);
+        const winSymbol = Gameboard.checkWinState();
+        if (winSymbol) {
+            Display.showWinner(player.getName());
+            player.increaseScore();
+        }
+        nextPlayer();
+    };
+
+    return { play, players, getCurrentPlayer, reset };
+})();
+
+const Display = (() => {
+    const resetBtn = document.querySelector('#reset');
+    resetBtn.addEventListener('click', () => {
+        Game.reset();
+    });
+    const curPlayerDiv = document.querySelector('#cur-player');
+    const playernames = document.querySelectorAll('.player-name');
+    const board = document.querySelector('#board');
+    const winCard = document.querySelector('#win-card');
+    const winnerSpan = document.querySelector('#winner');
+
+    playernames[0].textContent = Game.players[0].getName();
+    playernames[1].textContent = Game.players[1].getName();
+
+    const showWinner = playerName => {
+        board.style.display = 'none';
+        winnerSpan.textContent = playerName;
+        winCard.style.display = 'flex';
+    };
+
+    const reset = () => {
+        setCurrentPlayerDiv();
+        board.style.display = 'flex';
+        winCard.style.display = 'none';
+    };
+
+    const setCurrentPlayerDiv = () => {
+        curPlayerDiv.textContent = Game.getCurrentPlayer().getName();
+    };
+    curPlayerDiv.textContent = Game.getCurrentPlayer().getName();
+
+    return { setCurrentPlayerDiv, showWinner, reset };
 })();
 
 const Gameboard = (() => {
@@ -64,59 +108,50 @@ const Gameboard = (() => {
 
         slot.textContent = symbol;
         gameboardArray[position] = symbol;
-        let win = checkWinState();
-        console.log(win);
-        console.log(gameboardArray);
-
-        if (win) {
-            alert(win);
-            Game.reset();
-        }
-
-        Game.nextPlayer();
     };
 
-    slots.forEach((slot, index) => {
+    slots.forEach(slot => {
         slot.addEventListener('click', e => {
-            console.log(e);
-
-            addSymbol(Game.getCurrentPlayer(), index);
+            Game.play(e);
         });
     });
 
     const checkWinState = () => {
-        console.log('and here');
-
         for (let i = 0; i < 3; i++)
             if (
                 gameboardArray[i] === gameboardArray[i + 3] &&
-                gameboardArray[i + 3] === gameboardArray[i + 6]
+                gameboardArray[i + 3] === gameboardArray[i + 6] &&
+                gameboardArray[i] !== undefined
             ) {
                 console.log('here');
-
                 return gameboardArray[i];
             }
+
         for (let i = 0; i < 7; i = i + 3)
             if (
                 gameboardArray[i] === gameboardArray[i + 1] &&
-                gameboardArray[i + 1] === gameboardArray[i + 2]
+                gameboardArray[i + 1] === gameboardArray[i + 2] &&
+                gameboardArray[i] !== undefined
             )
                 return gameboardArray[i];
 
         if (
             gameboardArray[0] === gameboardArray[4] &&
-            gameboardArray[4] === gameboardArray[8]
+            gameboardArray[4] === gameboardArray[8] &&
+            gameboardArray[0] !== undefined
         )
             return gameboardArray[0];
 
         if (
             gameboardArray[2] === gameboardArray[4] &&
-            gameboardArray[4] === gameboardArray[6]
+            gameboardArray[4] === gameboardArray[6] &&
+            gameboardArray[2] !== undefined
         )
             return gameboardArray[2];
 
-        if (!gameboardArray.includes(undefined)) return 'tie';
+        if (!gameboardArray.includes(undefined) && gameboardArray.length === 9)
+            return 'tie';
     };
 
-    return { update, addSymbol, reset, checkWinState };
+    return { addSymbol, reset, checkWinState };
 })();
