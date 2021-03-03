@@ -1,3 +1,4 @@
+// Player Factory
 const Player = (name, symbol) => {
     let score = 0;
     const getName = () => name;
@@ -30,8 +31,9 @@ const Game = (() => {
     const getCurrentPlayer = () => currentPlayer;
 
     const nextPlayer = () => {
-        if (currentPlayer === p1) currentPlayer = p2;
-        else currentPlayer = p1;
+        currentPlayer = currentPlayer === p1 ? p2 : p1;
+        // if (currentPlayer === p1) currentPlayer = p2;
+        // else currentPlayer = p1;
         Display.setCurrentPlayerDiv();
     };
 
