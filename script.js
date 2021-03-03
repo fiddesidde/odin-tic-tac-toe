@@ -14,7 +14,6 @@ const Player = (name, symbol) => {
 };
 
 const DOM = (() => {
-    let names = [];
     const container = document.querySelector('#container');
     const body = document.querySelector('body');
     const inputP1 = document.createElement('input');
