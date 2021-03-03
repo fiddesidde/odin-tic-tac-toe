@@ -41,13 +41,16 @@ const Game = (() => {
         Gameboard.reset();
     };
 
+    const endOfRound = winner => {
+        Display.showWinner(winner.getName());
+        winner.increaseScore();
+    };
+
     const play = e => {
         const player = getCurrentPlayer();
         Gameboard.addSymbol(player, e.target.id);
-        const winSymbol = Gameboard.checkWinState();
-        if (winSymbol) {
-            Display.showWinner(player.getName());
-            player.increaseScore();
+        if (Gameboard.checkWinState()) {
+            endOfRound(player);
         }
         nextPlayer();
     };
@@ -88,7 +91,7 @@ const Display = (() => {
     const setCurrentPlayerDiv = () => {
         curPlayerDiv.textContent = Game.getCurrentPlayer().getName();
     };
-    curPlayerDiv.textContent = Game.getCurrentPlayer().getName();
+    setCurrentPlayerDiv();
 
     return { setCurrentPlayerDiv, showWinner, reset };
 })();
