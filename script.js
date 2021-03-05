@@ -97,15 +97,21 @@ const Game = (() => {
     };
 
     const endOfRound = winner => {
-        Display.showWinner(winner.getName());
-        winner.increaseScore();
+        if (winner === 'tie') {
+            return Display.showWinner('tie');
+        }
+
+        const player = getCurrentPlayer();
+        Display.showWinner(player.getName());
+        player.increaseScore();
     };
 
     const play = e => {
         const player = getCurrentPlayer();
         Gameboard.addSymbol(player, e.target.id);
-        if (Gameboard.checkWinState()) {
-            endOfRound(player);
+        const winner = Gameboard.checkWinState();
+        if (winner) {
+            endOfRound(winner);
         }
         nextPlayer();
     };
@@ -122,7 +128,6 @@ const Display = (() => {
     const playernames = document.querySelectorAll('.player-name');
     const board = document.querySelector('#board');
     const winCard = document.querySelector('#win-card');
-    const winnerSpan = document.querySelector('#winner');
     const asides = document.querySelectorAll('.aside');
 
     const setPlayerNameDisplay = () => {
@@ -132,7 +137,8 @@ const Display = (() => {
 
     const showWinner = playerName => {
         board.style.display = 'none';
-        winnerSpan.textContent = playerName;
+        if (playerName === 'tie') winCard.textContent = 'It was a tie!';
+        else winCard.textContent = `Congratulations! ${playerName} wins!`;
         winCard.style.display = 'flex';
         asides.forEach(aside => {
             aside.style.display = 'none';
@@ -143,6 +149,9 @@ const Display = (() => {
         setCurrentPlayerDiv();
         board.style.display = 'flex';
         winCard.style.display = 'none';
+        asides.forEach(aside => {
+            aside.style.display = 'flex';
+        });
     };
 
     const setCurrentPlayerDiv = () => {
