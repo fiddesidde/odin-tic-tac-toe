@@ -32,11 +32,13 @@ const DOM = (() => {
         p1Div.id = 'winner';
         p1Div.textContent = `Player 1, enter your name:`;
         inputP1.type = 'text';
+        inputP1.maxLength = 14;
 
         const p2Div = document.createElement('div');
         p2Div.id = 'winner';
         p2Div.textContent = `Player 2, enter your name:`;
         inputP2.type = 'text';
+        inputP2.maxLength = 14;
 
         const submitBtn = document.createElement('button');
         submitBtn.textContent = 'GO!';
@@ -100,10 +102,10 @@ const Game = (() => {
         if (winner === 'tie') {
             return Display.showWinner('tie');
         }
-
         const player = getCurrentPlayer();
-        Display.showWinner(player.getName());
         player.increaseScore();
+        Display.updateScore();
+        Display.showWinner(player.getName());
     };
 
     const play = e => {
@@ -145,6 +147,14 @@ const Display = (() => {
         });
     };
 
+    const updateScore = () => {
+        const p1score = document.querySelector('#p1-score');
+        const p2score = document.querySelector('#p2-score');
+        const players = Game.getPlayers();
+        p1score.textContent = players[0].getScore();
+        p2score.textContent = players[1].getScore();
+    };
+
     const reset = () => {
         setCurrentPlayerDiv();
         board.style.display = 'flex';
@@ -158,7 +168,13 @@ const Display = (() => {
         curPlayerDiv.textContent = Game.getCurrentPlayer().getName();
     };
 
-    return { setCurrentPlayerDiv, showWinner, reset, setPlayerNameDisplay };
+    return {
+        setCurrentPlayerDiv,
+        showWinner,
+        reset,
+        setPlayerNameDisplay,
+        updateScore,
+    };
 })();
 
 const Gameboard = (() => {
