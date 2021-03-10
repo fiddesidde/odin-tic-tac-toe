@@ -1,3 +1,6 @@
 Play again / reset buttons on showWinners screen, createButtons function complete, needs the rest.
 
-Show scores on showWinners screen
+Show scores on showWinners screen.
+
+
+Some time in the future: probably split up into modules
