@@ -57,13 +57,23 @@ const DOM = (() => {
         body.appendChild(setUpCont);
     };
 
+    const createPlayAgainButtons = () => {
+        const playAgainBtn = document.createElement('button');
+        playAgainBtn.textContent = 'Play Again';
+        playAgainBtn.addEventListener('click', () => {
+            Game.playAgain();
+        });
+        const resetBtn = document.createElement('button');
+        resetBtn.textContent = 'Reset';
+    };
+
     const removeSetUpView = () => {
         const cont = document.querySelector('#setUpCont');
         container.style.display = 'flex';
         body.removeChild(cont);
     };
 
-    return { createSetUpView };
+    return { createSetUpView, createPlayAgainButtons };
 })();
 
 const Game = (() => {
@@ -93,7 +103,17 @@ const Game = (() => {
     };
 
     const reset = () => {
+        const players = getPlayers();
+        for (const player of players) {
+            player.resetScore();
+        }
         currentPlayer = p1;
+        Display.updateScore();
+        Display.reset();
+        Gameboard.reset();
+    };
+
+    const playAgain = () => {
         Display.reset();
         Gameboard.reset();
     };
@@ -108,7 +128,7 @@ const Game = (() => {
         Display.showWinner(player.getName());
     };
 
-    const play = e => {
+    const addMark = e => {
         const player = getCurrentPlayer();
         Gameboard.addSymbol(player, e.target.id);
         const winner = Gameboard.checkWinState();
@@ -118,7 +138,15 @@ const Game = (() => {
         nextPlayer();
     };
 
-    return { play, getPlayers, getCurrentPlayer, createPlayers, reset, run };
+    return {
+        addMark,
+        getPlayers,
+        getCurrentPlayer,
+        createPlayers,
+        reset,
+        run,
+        playAgain,
+    };
 })();
 
 const Display = (() => {
@@ -203,7 +231,7 @@ const Gameboard = (() => {
 
     slots.forEach(slot => {
         slot.addEventListener('click', e => {
-            Game.play(e);
+            Game.addMark(e);
         });
     });
 
