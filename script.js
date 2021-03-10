@@ -58,13 +58,33 @@ const DOM = (() => {
     };
 
     const createPlayAgainButtons = () => {
-        const playAgainBtn = document.createElement('button');
-        playAgainBtn.textContent = 'Play Again';
-        playAgainBtn.addEventListener('click', () => {
+        const btns = [
+            {
+                textC: 'Play Again',
+                cls: 'once-more',
+            },
+            {
+                textC: 'Reset',
+                cls: 'once-more',
+            },
+        ];
+
+        const btnnnnz = [];
+
+        for (btn of btns) {
+            let DOMButton = document.createElement('button');
+            DOMButton.textContent = btn.textC;
+            DOMButton.className += btn.cls;
+            btnnnnz.push(DOMButton);
+        }
+        btnnnnz[0].addEventListener('click', () => {
             Game.playAgain();
         });
-        const resetBtn = document.createElement('button');
-        resetBtn.textContent = 'Reset';
+        btnnnnz[1].addEventListener('click', () => {
+            Game.reset();
+            createSetUpView();
+        });
+        return btnnnnz;
     };
 
     const removeSetUpView = () => {
