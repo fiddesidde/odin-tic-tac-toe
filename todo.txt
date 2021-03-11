@@ -1,8 +1,10 @@
-
+fix finalScoreView styling. wrapping etc.
 
 Add Media queries
 
 refactor
+
+
 
 
 Some time in the future: probably split up into modules
