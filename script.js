@@ -61,6 +61,7 @@ const DOM = (() => {
 
     const createFinalScoreView = () => {
         const winCardScores = document.querySelector('#win-card-scores');
+        const winCardButtons = document.querySelector('#win-card-buttons');
 
         const players = Game.getPlayers();
         const player1Name = players[0].getName();
@@ -70,11 +71,26 @@ const DOM = (() => {
 
         p1Div = document.createElement('div');
         p1Div.textContent = `${player1Name}: ${player1Score}`;
+        p1Div.className = 'final-score';
         p2Div = document.createElement('div');
         p2Div.textContent = `${player2Name}: ${player2Score}`;
+        p2Div.className = 'final-score';
 
         winCardScores.appendChild(p1Div);
         winCardScores.appendChild(p2Div);
+
+        const buttons = createPlayAgainButtons();
+
+        buttons.forEach(btn => winCardButtons.appendChild(btn));
+    };
+
+    const getFinalScoreDivs = () => document.querySelectorAll('.final-score');
+
+    const resetFinalScoreView = () => {
+        const winCardScores = document.querySelector('#win-card-scores');
+        const winCardButtons = document.querySelector('#win-card-buttons');
+        winCardScores.innerHTML = '';
+        winCardButtons.innerHTML = '';
     };
 
     const createPlayAgainButtons = () => {
@@ -112,7 +128,13 @@ const DOM = (() => {
         body.removeChild(cont);
     };
 
-    return { createSetUpView, createPlayAgainButtons, createFinalScoreView };
+    return {
+        createSetUpView,
+        createPlayAgainButtons,
+        createFinalScoreView,
+        getFinalScoreDivs,
+        resetFinalScoreView,
+    };
 })();
 
 const Game = (() => {
@@ -130,6 +152,7 @@ const Game = (() => {
         currentPlayer = p1;
         Display.setCurrentPlayerDiv();
         Display.setPlayerNameDisplay();
+        DOM.createFinalScoreView();
     };
 
     const getPlayers = () => [p1, p2];
@@ -148,6 +171,7 @@ const Game = (() => {
         Display.updateScore();
         Display.reset();
         Gameboard.reset();
+        DOM.resetFinalScoreView();
     };
 
     const playAgain = () => {
@@ -216,9 +240,13 @@ const Display = (() => {
     const updateScore = () => {
         const p1score = document.querySelector('#p1-score');
         const p2score = document.querySelector('#p2-score');
-        const players = Game.getPlayers();
-        p1score.textContent = players[0].getScore();
-        p2score.textContent = players[1].getScore();
+        const finalScoreDivs = DOM.getFinalScoreDivs();
+        const player1score = Game.getPlayers()[0].getScore();
+        const player2score = Game.getPlayers()[1].getScore();
+        p1score.textContent = player1score;
+        p2score.textContent = player2score;
+        finalScoreDivs[0].textContent = player1score;
+        finalScoreDivs[1].textContent = player2score;
     };
 
     const reset = () => {
