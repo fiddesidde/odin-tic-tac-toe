@@ -58,7 +58,7 @@ const DOM = (() => {
     };
 
     const createPlayAgainButtons = () => {
-        const btns = [
+        const buttonsData = [
             {
                 textC: 'Play Again',
                 cls: 'once-more',
@@ -69,22 +69,22 @@ const DOM = (() => {
             },
         ];
 
-        const btnnnnz = [];
+        const buttons = [];
 
         for (btn of btns) {
             let DOMButton = document.createElement('button');
             DOMButton.textContent = btn.textC;
             DOMButton.className += btn.cls;
-            btnnnnz.push(DOMButton);
+            buttons.push(DOMButton);
         }
-        btnnnnz[0].addEventListener('click', () => {
+        buttons[0].addEventListener('click', () => {
             Game.playAgain();
         });
-        btnnnnz[1].addEventListener('click', () => {
+        buttons[1].addEventListener('click', () => {
             Game.reset();
             createSetUpView();
         });
-        return btnnnnz;
+        return buttons;
     };
 
     const removeSetUpView = () => {
