@@ -241,12 +241,14 @@ const Display = (() => {
         const p1score = document.querySelector('#p1-score');
         const p2score = document.querySelector('#p2-score');
         const finalScoreDivs = DOM.getFinalScoreDivs();
-        const player1score = Game.getPlayers()[0].getScore();
-        const player2score = Game.getPlayers()[1].getScore();
+        const player1 = Game.getPlayers()[0];
+        const player2 = Game.getPlayers()[1];
+        const player1score = player1.getScore();
+        const player2score = player2.getScore();
         p1score.textContent = player1score;
         p2score.textContent = player2score;
-        finalScoreDivs[0].textContent = player1score;
-        finalScoreDivs[1].textContent = player2score;
+        finalScoreDivs[0].textContent = `${player1.getName()}: ${player1score}`;
+        finalScoreDivs[1].textContent = `${player2.getName()}: ${player2score}`;
     };
 
     const reset = () => {
