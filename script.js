@@ -124,9 +124,7 @@ const Game = (() => {
 
     const reset = () => {
         const players = getPlayers();
-        for (const player of players) {
-            player.resetScore();
-        }
+        for (const player of players) player.resetScore();
         currentPlayer = p1;
         Display.updateScore();
         Display.reset();
@@ -178,6 +176,7 @@ const Display = (() => {
     const playernames = document.querySelectorAll('.player-name');
     const board = document.querySelector('#board');
     const winCard = document.querySelector('#win-card');
+    const winnerText = document.querySelector('#win-card-text');
     const asides = document.querySelectorAll('.aside');
 
     const setPlayerNameDisplay = () => {
@@ -187,8 +186,8 @@ const Display = (() => {
 
     const showWinner = playerName => {
         board.style.display = 'none';
-        if (playerName === 'tie') winCard.textContent = 'It was a tie!';
-        else winCard.textContent = `Congratulations! ${playerName} wins!`;
+        if (playerName === 'tie') winnerText.textContent = 'It was a tie!';
+        else winnerText.textContent = `Congratulations! ${playerName} wins!`;
         winCard.style.display = 'flex';
         asides.forEach(aside => {
             aside.style.display = 'none';
