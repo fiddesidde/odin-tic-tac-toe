@@ -68,10 +68,9 @@ const DOM = (() => {
                 cls: 'once-more',
             },
         ];
-
         const buttons = [];
 
-        for (btn of btns) {
+        for (btn of buttonsData) {
             let DOMButton = document.createElement('button');
             DOMButton.textContent = btn.textC;
             DOMButton.className += btn.cls;
