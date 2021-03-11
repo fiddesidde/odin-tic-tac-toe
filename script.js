@@ -16,14 +16,12 @@ const Player = (name, symbol) => {
 const DOM = (() => {
     const container = document.querySelector('#container');
     const body = document.querySelector('body');
-    const inputP1 = document.createElement('input');
-    const inputP2 = document.createElement('input');
 
     const createSetUpView = () => {
         container.style.display = 'none';
 
-        const setUpCont = document.createElement('div');
-        setUpCont.id = 'setUpCont';
+        const setUpContainer = document.createElement('div');
+        setUpContainer.id = 'setUpCont';
         const setUpCard = document.createElement('div');
         setUpCard.className = 'card';
         setUpCard.id = 'su-card';
@@ -31,12 +29,16 @@ const DOM = (() => {
         const p1Div = document.createElement('div');
         p1Div.id = 'winner';
         p1Div.textContent = `Player 1, enter your name:`;
+
+        const inputP1 = document.createElement('input');
         inputP1.type = 'text';
         inputP1.maxLength = 14;
 
         const p2Div = document.createElement('div');
         p2Div.id = 'winner';
         p2Div.textContent = `Player 2, enter your name:`;
+
+        const inputP2 = document.createElement('input');
         inputP2.type = 'text';
         inputP2.maxLength = 14;
 
@@ -53,8 +55,26 @@ const DOM = (() => {
         setUpCard.appendChild(p2Div);
         setUpCard.appendChild(inputP2);
         setUpCard.appendChild(submitBtn);
-        setUpCont.appendChild(setUpCard);
-        body.appendChild(setUpCont);
+        setUpContainer.appendChild(setUpCard);
+        body.appendChild(setUpContainer);
+    };
+
+    const createFinalScoreView = () => {
+        const winCardScores = document.querySelector('#win-card-scores');
+
+        const players = Game.getPlayers();
+        const player1Name = players[0].getName();
+        const player2Name = players[1].getName();
+        const player1Score = players[0].getScore();
+        const player2Score = players[1].getScore();
+
+        p1Div = document.createElement('div');
+        p1Div.textContent = `${player1Name}: ${player1Score}`;
+        p2Div = document.createElement('div');
+        p2Div.textContent = `${player2Name}: ${player2Score}`;
+
+        winCardScores.appendChild(p1Div);
+        winCardScores.appendChild(p2Div);
     };
 
     const createPlayAgainButtons = () => {
@@ -92,7 +112,7 @@ const DOM = (() => {
         body.removeChild(cont);
     };
 
-    return { createSetUpView, createPlayAgainButtons };
+    return { createSetUpView, createPlayAgainButtons, createFinalScoreView };
 })();
 
 const Game = (() => {

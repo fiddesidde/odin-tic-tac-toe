@@ -53,6 +53,17 @@
     align-items: center;
     padding: 1rem 0 1rem 0;
 }
+
+#win-card-scores {
+    display: flex;
+    flex: 0 0 1em;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 90%;
+    font-size: 1.7rem;
+    border: 2px solid red;
+}
+
 #su-card {
     display: flex;
     flex-direction: column;
